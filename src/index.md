@@ -1,13 +1,58 @@
 ---
+title: Twilight Imperium 2026
 toc: false
 ---
+
 
 <div class="hero">
   <h1>Twilight Imperium 4</h1>
   <h2>Round 2.2</h2>
   <p><i>From Thursday, March 26, 2026 to Friday, October 16, 2026.</i></p>
-  <a href="https://observablehq.com/framework/getting-started">Get started<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
+
+```js
+const events = FileAttachment("./data/events.json").json();
+```
+
+```js
+const players = [...new Set(events.map((d) => d.actor).filter(Boolean))].sort();
+const kinds = [...new Set(events.map((d) => d.kind))].sort();
+const rounds = [...new Set(events.map((d) => d.round))].sort((a, b) => a - b);
+```
+
+```js
+const whoFilter = view(Inputs.checkbox(players, {label: "Player", value: players}));
+const roundFilter = view(Inputs.checkbox(rounds, {label: "Round", value: rounds, format: (r) => (r === 0 ? "setup" : `R${r}`)}));
+const kindFilter = view(Inputs.checkbox(kinds, {label: "Kind", value: kinds}));
+```
+
+```js
+const filtered = events.filter((d) =>
+  roundFilter.includes(d.round) &&
+  kindFilter.includes(d.kind) &&
+  (d.actor === null || whoFilter.includes(d.actor))
+);
+```
+
+```js
+const results = view(Inputs.search(filtered, {
+  columns: ["time", "event", "actor"],
+  placeholder: "Search the log (planet, card, player, date…)",
+  format: (n) => `${n.toLocaleString("en-US")} of ${events.length.toLocaleString("en-US")} entries`
+}));
+```
+
+```js
+Inputs.table(results, {
+  columns: ["n", "round", "time", "actor", "kind", "event"],
+  header: {n: "#", round: "Rd", time: "When", actor: "Player", kind: "Kind", event: "Event"},
+  width: {n: 55, round: 45, time: 200, actor: 110, kind: 90},
+  format: {round: (r) => (r === 0 ? "—" : r)},
+  height: 640,
+  select: false,
+  layout: "fixed"
+})
+```
 
 <div class="grid grid-cols-2" style="grid-auto-rows: 504px;">
   <div class="card">${
@@ -84,8 +129,8 @@ Here are some ideas of things you could try…
   margin: 1rem 0;
   padding: 1rem 0;
   max-width: none;
-  font-size: 14vw;
-  font-weight: 900;
+  font-size: 10vw;
+  font-weight: 700;
   line-height: 1;
   background: linear-gradient(30deg, var(--theme-foreground-focus), currentColor);
   -webkit-background-clip: text;
