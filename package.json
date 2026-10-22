@@ -6,6 +6,7 @@
     "build": "observable build",
     "dev": "observable preview",
     "deploy": "observable deploy",
+    "pages": "npm run clean && npm run build && gh-pages -d dist --nojekyll",
     "observable": "observable"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "d3-time-format": "^4.1.0"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "rimraf": "^5.0.5"
   },
   "engines": {

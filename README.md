@@ -17,3 +17,14 @@ Export both files from the same page load. The data loader joins them line by li
 npm install
 npm run dev
 ```
+
+## Publishing
+The site is published to GitHub Pages from the `gh-pages` branch. GitHub can't build it because the logs aren't in the repo, so build and publish locally (with `data-raw/` filled in):
+
+```
+npm run pages
+```
+
+This clears the data loader cache, builds the site into `dist/`, and pushes `dist/` to the `gh-pages` branch. Commits to `main` don't change the live site until you run this again.
+
+One-time setup, after the first `npm run pages`: on GitHub go to **Settings → Pages**, set **Source** to **Deploy from a branch**, choose **gh-pages** and **/ (root)**, and save.
