@@ -3,11 +3,16 @@
     "defaultMode": "plan",
     "deny": [
       "Edit(data-raw/**)",
-      "Write(data-raw/**)"
+      "Write(data-raw/**)",
+      "Edit(node_modules/**)",
+      "Write(node_modules/**)"
     ],
     "ask": [
       "Bash(git push:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm update:*)"
     ]
   }
 }
