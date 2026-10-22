@@ -30,7 +30,7 @@ function classify(text) {
   if (/strategy card|resolved the (primary|secondary) ability/.test(text)) return "strategy";
   if (/agenda|cast \d+ vote|abstained/.test(text)) return "politics";
   if (/technology|researched/.test(text)) return "technology";
-  if (/explor|relic fragment|frontier/i.test(text)) return "exploration";
+  if (/explor|relic fragment|frontier/i.test(text) && !/scored the .+ objective/.test(text)) return "exploration";
   if (/scored the|victory point|objective revealed/.test(text)) return "scoring";
   if (/action card/.test(text)) return "cards";
   if (/faction ability|flagship ability|ability of their|played .*legendary|Sustain Damage/.test(text)) return "abilities";
@@ -76,6 +76,8 @@ const events = raw.map((entry, i) => {
     faction: factions[0] ?? null,
     players,
     kind: classify(text),
+    // Victory points can come from any kind (e.g. Imperial is "strategy"), so flag them separately.
+    scored: /scored the .+ objective|gained \d+ victory points?/.test(text),
     event: text,
     cards,
     systems

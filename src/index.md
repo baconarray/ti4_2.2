@@ -49,7 +49,7 @@ const kindFilter = view(Inputs.checkbox(kinds, {label: "Kind", value: kinds}));
 ```js
 const filtered = events.filter((d) =>
   roundFilter.includes(d.round) &&
-  kindFilter.includes(d.kind) &&
+  (kindFilter.includes(d.kind) || (d.scored && kindFilter.includes("scoring"))) &&
   (d.actor === null || whoFilter.includes(d.actor))
 );
 ```

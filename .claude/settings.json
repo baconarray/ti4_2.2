@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "defaultMode": "plan",
+    "deny": [
+      "Edit(data-raw/**)",
+      "Write(data-raw/**)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(rm:*)"
+    ]
+  }
+}
