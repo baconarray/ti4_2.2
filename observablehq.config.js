@@ -1,7 +1,7 @@
 // See https://observablehq.com/framework/config for documentation.
 export default {
   // The app’s title; used in the sidebar and webpage titles.
-  title: "ti4",
+  title: "Twilight Imperium",
 
   // The pages and sections in the sidebar. If you don’t specify this option,
   // all pages will be listed in alphabetical order. Listing pages explicitly
@@ -21,6 +21,9 @@ export default {
 
   // The path to the source root.
   root: "src",
+
+  // Shared stylesheet for every page (relative to root); it re-imports the default theme.
+  style: "style.css",
 
   // Some additional configuration options and their defaults:
   // theme: "default", // try "light", "dark", "slate", etc.

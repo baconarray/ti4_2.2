@@ -1,0 +1,119 @@
+/* Setting `style` in the config replaces Framework's default theme, so re-import it first. */
+@import url("observablehq:default.css");
+@import url("observablehq:theme-air.css") (prefers-color-scheme: light);
+@import url("observablehq:theme-near-midnight.css") (prefers-color-scheme: dark);
+
+/* Log tables (Inputs.table with the log-table class) */
+
+.event-text {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.log-table td {
+  vertical-align: top;
+}
+
+/* Filter panels: a card per checkbox input, styled as pill toggles */
+
+.filters {
+  margin: 1rem 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--theme-foreground-faintest);
+  border-radius: 12px;
+  background: var(--theme-background);
+}
+
+.filters > h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.filters > .grid {
+  margin-bottom: 0;
+}
+
+.filters .card {
+  position: relative;
+  margin: 0;
+}
+
+.filter-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--theme-foreground-faint);
+}
+
+.filter-actions button {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--theme-foreground-focus);
+  cursor: pointer;
+}
+
+.filter-actions button:hover {
+  text-decoration: underline;
+}
+
+.filter-actions button:focus-visible {
+  outline: 2px solid var(--theme-foreground-focus);
+  outline-offset: 2px;
+}
+
+.filters .card form {
+  flex-direction: column;
+  align-items: stretch;
+  width: auto;
+  margin: 0;
+}
+
+.filters .card form > label {
+  width: auto;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  font-weight: 600;
+  color: var(--theme-foreground-muted);
+}
+
+.filters .card form > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filters .card label:has(> input) {
+  margin: 0;
+  padding: 4px 12px;
+  border: 1px solid var(--theme-foreground-faint);
+  border-radius: 999px;
+  color: var(--theme-foreground-muted);
+  cursor: pointer;
+  user-select: none;
+  transition: background 120ms, border-color 120ms, color 120ms;
+}
+
+.filters .card label:has(> input:checked) {
+  background: var(--theme-foreground-focus);
+  border-color: var(--theme-foreground-focus);
+  color: var(--theme-background);
+}
+
+.filters .card label:has(> input:focus-visible) {
+  outline: 2px solid var(--theme-foreground-focus);
+  outline-offset: 2px;
+}
+
+.filters .card label > input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
