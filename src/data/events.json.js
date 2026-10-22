@@ -48,6 +48,18 @@ if (raw.length !== lines.length) {
 let picks = 0;
 let round = 0;
 
+// Public objectives come out 5 Stage I (1 VP) then Stage II (2 VP); anything scored
+// that was never revealed is a secret (1 VP). The log doesn't record stages itself.
+const STAGE_ONE_COUNT = 5;
+const objectiveValue = new Map();
+const vp = new Map();
+const colorOf = new Map();
+
+function award(points, player, n) {
+  points[player] = (points[player] ?? 0) + n;
+  vp.set(player, (vp.get(player) ?? 0) + n);
+}
+
 const events = raw.map((entry, i) => {
   const [, time, rawText] = /^\[([^\]]+)\]\s+(.*)$/.exec(lines[i]);
   const text = rawText.replace(/\s+([.,])/g, "$1");
@@ -67,17 +79,56 @@ const events = raw.map((entry, i) => {
     picks += 1;
   }
 
+  for (const t of playerTags) {
+    const name = attr(t, "name");
+    if (name) {
+      colorOf.set(name, attr(t, "color"));
+      if (!vp.has(name)) vp.set(name, 0);
+    }
+  }
+
+  const actor = players[0] ?? null;
+  let kind = classify(text);
+  let involved = players;
+  const points = {};
+
+  const revealed = /^Public objective revealed: (.+)\.$/.exec(text);
+  if (revealed) objectiveValue.set(revealed[1], objectiveValue.size < STAGE_ONE_COUNT ? 1 : 2);
+
+  if (actor) {
+    for (const m of text.matchAll(/scored the (.+?) objective/g)) award(points, actor, objectiveValue.get(m[1]) ?? 1);
+    for (const m of text.matchAll(/gained (\d+) victory points?/g)) award(points, actor, +m[1]);
+  }
+
+  // Holding another player's Support for the Throne is worth 1 VP; data-color names the note's owner.
+  if (/traded Support for the Throne to/.test(text)) {
+    const owner = /data-name="Support for the Throne"[^>]*data-color="([^"]*)"/.exec(entry.html)?.[1];
+    const holder = players[1];
+    if (holder && owner && owner !== colorOf.get(holder)) award(points, holder, 1);
+  }
+
+  // Seed of an Empire: For gives 1 VP to the leaders, Against to the players with the fewest.
+  const seed = /^Seed of an Empire resolved with the outcome: (For|Against)/.exec(text);
+  if (seed) {
+    const totals = [...vp.values()];
+    const target = seed[1] === "For" ? Math.max(...totals) : Math.min(...totals);
+    involved = [...vp].filter(([, v]) => v === target).map(([p]) => p);
+    for (const p of involved) award(points, p, 1);
+    kind = "scoring";
+  }
+
   return {
     n: i + 1,
     time,
     date: parseTime(time)?.toISOString() ?? null,
     round,
-    actor: players[0] ?? null,
+    actor,
     faction: factions[0] ?? null,
-    players,
-    kind: classify(text),
+    players: involved,
+    kind,
     // Victory points can come from any kind (e.g. Imperial is "strategy"), so flag them separately.
-    scored: /scored the .+ objective|gained \d+ victory points?/.test(text),
+    scored: Object.keys(points).length > 0,
+    points,
     event: text,
     cards,
     systems
