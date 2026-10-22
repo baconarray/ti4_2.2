@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.4">
+<title>Twilight Imperium 2026 | TwilightWars Game Log</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_import/style.a3506b28.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_import/style.a3506b28.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="modulepreload" href="./_observablehq/client.3004805e.js">
+<link rel="modulepreload" href="./_observablehq/runtime.fa9f71c0.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.c4209144.js">
+<link rel="modulepreload" href="./_import/components/filters.4223e35a.js">
+<link rel="modulepreload" href="./_npm/htl@1.0.0/11521f02.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.0cc910eb.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/604cb63b.js">
+<link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
+<script type="module">
+
+import {define} from "./_observablehq/client.3004805e.js";
+import {registerFile} from "./_observablehq/stdlib.c4209144.js";
+
+registerFile("./data/events.json", {"name":"./data/events.json","mimeType":"application/json","path":"./_file/data/events.ed64b93c.json","lastModified":1792685873386,"size":769852});
+
+define({id: "e4b77d4a", inputs: ["FileAttachment"], outputs: ["events"], body: (FileAttachment) => {
+const events = FileAttachment("./data/events.json").json();
+return {events};
+}});
+
+define({id: "f48c833f", inputs: ["events"], outputs: ["summarize","summary"], body: (events) => {
+function summarize(events) {
+  const gameOver = [...events].reverse().find((d) => /^Game over\./.test(d.event));
+  return {
+    start: events[0].time.split(" at ")[0],
+    end: events[events.length - 1].time.split(" at ")[0],
+    round: Math.max(...events.map((d) => d.round)),
+    winner: gameOver
+      ? gameOver.actor ?? /^Game over\. (.+?) wins/.exec(gameOver.event)?.[1] ?? "unknown"
+      : null
+  };
+}
+
+const summary = summarize(events);
+return {summarize,summary};
+}});
+
+define({id: "98e30cd4", inputs: ["html","summary","display"], body: async (html,summary,display) => {
+display(await(
+html`<div class="hero">
+  <h1>Twilight Imperium 4</h1>
+  <h3>${summary.winner
+    ? `Winner: ${summary.winner}`
+    : `Game In Progress (Round ${summary.round})`}</h3>
+  <h2>Game Summary from TwilightWars.com Logs</h2>
+  <p><i>From ${summary.start} to ${summary.end}.</i></p>
+</div>`
+))
+}});
+
+define({id: "8202ce27", inputs: ["events"], outputs: ["players","playerOptions","kinds","rounds"], body: (events) => {
+const players = [...new Set(events.map((d) => d.actor).filter(Boolean))].sort();
+const playerOptions = [...players, null];
+const kinds = [...new Set(events.map((d) => d.kind))].sort();
+const rounds = [...new Set(events.map((d) => d.round))].sort((a, b) => a - b);
+return {players,playerOptions,kinds,rounds};
+}});
+
+define({id: "7fe024f8", inputs: ["Inputs","playerOptions","rounds","kinds","Generators"], outputs: ["whoInput","roundInput","kindInput","whoFilter","roundFilter","kindFilter"], body: (Inputs,playerOptions,rounds,kinds,Generators) => {
+const whoInput = Inputs.checkbox(playerOptions, {label: "Player", value: playerOptions, format: (p) => p ?? "System"});
+const roundInput = Inputs.checkbox(rounds, {label: "Round", value: rounds, format: (r) => (r === 0 ? "setup" : `R${r}`)});
+const kindInput = Inputs.checkbox(kinds, {label: "Kind", value: kinds});
+const whoFilter = Generators.input(whoInput);
+const roundFilter = Generators.input(roundInput);
+const kindFilter = Generators.input(kindInput);
+return {whoInput,roundInput,kindInput,whoFilter,roundFilter,kindFilter};
+}});
+
+define({id: "0c4f5a9f", outputs: ["allNone"], body: async () => {
+const {allNone} = await import("./_import/components/filters.4223e35a.js");
+
+return {allNone};
+}});
+
+define({id: "fa2538b2", inputs: ["html","allNone","whoInput","playerOptions","roundInput","rounds","kindInput","kinds","display"], body: async (html,allNone,whoInput,playerOptions,roundInput,rounds,kindInput,kinds,display) => {
+display(await(
+html`<section class="filters">
+  <h2>Filters</h2>
+  <div class="grid grid-cols-3">
+    <div class="card">${allNone(whoInput, playerOptions)}${whoInput}</div>
+    <div class="card">${allNone(roundInput, rounds)}${roundInput}</div>
+    <div class="card">${allNone(kindInput, kinds)}${kindInput}</div>
+  </div>
+</section>`
+))
+}});
+
+define({id: "8227157d", inputs: ["events","roundFilter","kindFilter","whoFilter"], outputs: ["filtered"], body: (events,roundFilter,kindFilter,whoFilter) => {
+const filtered = events.filter((d) =>
+  roundFilter.includes(d.round) &&
+  (kindFilter.includes(d.kind) || (d.scored && kindFilter.includes("scoring"))) &&
+  whoFilter.includes(d.actor)
+);
+return {filtered};
+}});
+
+define({id: "9ebd4055", inputs: ["view","Inputs","filtered","events"], outputs: ["results"], body: (view,Inputs,filtered,events) => {
+const results = view(Inputs.search(filtered, {
+  columns: ["time", "event", "actor"],
+  placeholder: "Search the log (planet, card, player, date…)",
+  format: (n) => `${n.toLocaleString("en-US")} of ${events.length.toLocaleString("en-US")} entries`
+}));
+return {results};
+}});
+
+define({id: "eab470c3", inputs: ["html"], outputs: ["wrapEvent"], body: (html) => {
+const wrapEvent = (e) => html`<span class="event-text">${e}</span>`;
+return {wrapEvent};
+}});
+
+define({id: "2337ef6d", inputs: ["Inputs","results","wrapEvent","display"], outputs: ["logTable"], body: (Inputs,results,wrapEvent,display) => {
+const logTable = Inputs.table(results, {
+  columns: ["n", "round", "time", "actor", "kind", "event"],
+  header: {n: "#", round: "Rd", time: "When", actor: "Player", kind: "Kind", event: "Event"},
+  width: {n: 55, round: 45, time: 200, actor: 110, kind: 90},
+  format: {
+    round: (r) => (r === 0 ? "—" : r),
+    event: wrapEvent
+  },
+  rows: 12,
+  select: false,
+  layout: "fixed"
+});
+logTable.classList.add("log-table");
+display(logTable);
+return {logTable};
+}});
+
+</script>
+</head>
+<body>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link observablehq-link-active"><a href="./">TwilightWars Game Log</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link"><a href="./vp">Victory Points</a></li>
+    <li class="observablehq-link"><a href="./whose-move">Whose Move?</a></li>
+  </ol>
+</nav>
+<script>{const e=document.querySelector("#observablehq-sidebar"),o=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?o.checked=r==="true":o.indeterminate=!0;for(const t of document.querySelectorAll("#observablehq-sidebar summary")){const s=t.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${t.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<div class="observablehq observablehq--block"><!--:e4b77d4a:--></div>
+<div class="observablehq observablehq--block"><!--:f48c833f:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:98e30cd4:--></div>
+<h1 id="game-log" tabindex="-1"><a class="observablehq-header-anchor" href="#game-log">Game Log</a></h1>
+<div class="observablehq observablehq--block"><!--:8202ce27:--></div>
+<div class="observablehq observablehq--block"><!--:7fe024f8:--></div>
+<div class="observablehq observablehq--block"><!--:0c4f5a9f:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:fa2538b2:--></div>
+<div class="observablehq observablehq--block"><!--:8227157d:--></div>
+<div class="observablehq observablehq--block"><!--:9ebd4055:--></div>
+<div class="observablehq observablehq--block"><!--:eab470c3:--></div>
+<div class="observablehq observablehq--block"><!--:2337ef6d:--></div>
+<style>
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--sans-serif);
+  margin: 4rem 0 2rem;
+  text-wrap: balance;
+  text-align: center;
+}
+
+.hero h1 {
+  margin: 1rem 0;
+  padding: 1rem 0;
+  max-width: none;
+  font-size: 10vw;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(30deg, var(--theme-foreground-focus), currentColor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero h2 {
+  margin: 0;
+  max-width: 34em;
+  font-size: 20px;
+  font-style: initial;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--theme-foreground-muted);
+}
+
+@media (min-width: 640px) {
+  .hero h1 {
+    font-size: 90px;
+  }
+}
+
+</style>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="next" href="./vp"><span>Victory Points</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-10-22T12:17:48">Oct 22, 2026</a>.</div>
+</footer>
+</div>
+</body>
+</html>

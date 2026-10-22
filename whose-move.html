@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.4">
+<title>Whose Move? | TwilightWars Game Log</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_import/style.a3506b28.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_import/style.a3506b28.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="modulepreload" href="./_observablehq/client.3004805e.js">
+<link rel="modulepreload" href="./_observablehq/runtime.fa9f71c0.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.c4209144.js">
+<link rel="modulepreload" href="./_import/components/filters.4223e35a.js">
+<link rel="modulepreload" href="./_import/components/turns.2130f449.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/080cf928.js">
+<link rel="modulepreload" href="./_npm/htl@1.0.0/11521f02.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.0cc910eb.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.17/93ce672e.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/604cb63b.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/b8e751b6.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/c662ea05.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/d162d8c6.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/5cedd0be.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/65d51007.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/c576a91a.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/8b43826d.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/3fb06f14.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/20b76948.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/097745a2.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/8683b012.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/5c319046.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/33924f3e.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.2/8d67a1ae.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/8037bd0b.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/a9ba0229.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/e0a47f97.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/f9e9e0ab.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/2da8eb3b.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/09002e01.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/5108797c.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/c9f2571b.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/f3c78e0d.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/28717d05.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/7c6e2a50.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/3d1d57c6.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/643581a8.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/e99232db.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/bd07fd9a.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/d09f7cc9.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/f53f17b2.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/af036d7e.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.1.0/7b06abe7.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/5f640032.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.3/b42f30a7.js">
+<link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
+<script type="module">
+
+import {define} from "./_observablehq/client.3004805e.js";
+import {registerFile} from "./_observablehq/stdlib.c4209144.js";
+
+registerFile("./data/events.json", {"name":"./data/events.json","mimeType":"application/json","path":"./_file/data/events.ed64b93c.json","lastModified":1792685873386,"size":769852});
+
+define({id: "75b7b46f", outputs: ["allNone","buildTurns","fmtMinutes"], body: async () => {
+const [{allNone}, {buildTurns, fmtMinutes}] = await Promise.all([import("./_import/components/filters.4223e35a.js"), import("./_import/components/turns.2130f449.js")]);
+
+return {allNone,buildTurns,fmtMinutes};
+}});
+
+define({id: "e4b77d4a", inputs: ["FileAttachment"], outputs: ["events"], body: (FileAttachment) => {
+const events = FileAttachment("./data/events.json").json();
+return {events};
+}});
+
+define({id: "4d268d4d", inputs: ["buildTurns","events","html"], outputs: ["turns","players","rounds","wrapEvent"], body: (buildTurns,events,html) => {
+const turns = buildTurns(events);
+const players = [...new Set(turns.map((d) => d.player))].sort();
+const rounds = [...new Set(turns.map((d) => d.round))].sort((a, b) => a - b);
+const wrapEvent = (e) => html`<span class="event-text">${e}</span>`;
+return {turns,players,rounds,wrapEvent};
+}});
+
+define({id: "f5007334", inputs: ["events","display","Plot","width","d3"], outputs: ["DAYS","dated"], body: (events,display,Plot,width,d3) => {
+const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// The loader stores wall-clock times as UTC, so read them back with the UTC getters.
+const dated = events.filter((d) => d.date).map((d) => new Date(d.date));
+
+display(Plot.plot({
+  width,
+  height: 260,
+  marginLeft: 40,
+  padding: 0,
+  x: {domain: d3.range(24), label: "Hour of day", tickFormat: (h) => (h % 3 === 0 ? h : "")},
+  y: {domain: [1, 2, 3, 4, 5, 6, 0], tickFormat: (d) => DAYS[d], label: null},
+  color: {scheme: "blues", legend: true, label: "Log entries"},
+  marks: [
+    Plot.cell(dated, Plot.group({fill: "count"}, {
+      x: (d) => d.getUTCHours(),
+      y: (d) => d.getUTCDay(),
+      inset: 1,
+      rx: 2,
+      tip: true
+    }))
+  ]
+}));
+return {DAYS,dated};
+}});
+
+define({id: "7613c326", inputs: ["d3","turns"], outputs: ["turnStats","phaseRows"], body: (d3,turns) => {
+// One summary row per player, slowest median turn first.
+const turnStats = d3.groups(turns, (d) => d.player)
+  .map(([player, rows]) => {
+    const longest = d3.greatest(rows, (d) => d.total);
+    const shortest = d3.least(rows, (d) => d.total);
+    return {
+      player,
+      turns: rows.length,
+      medianWait: d3.median(rows, (d) => d.wait),
+      medianActing: d3.median(rows, (d) => d.acting),
+      medianTotal: d3.median(rows, (d) => d.total),
+      longest: longest.total,
+      longestOn: longest.start,
+      shortest: shortest.total,
+      shortestOn: shortest.start
+    };
+  })
+  .sort((a, b) => b.medianTotal - a.medianTotal);
+
+const phaseRows = turnStats.flatMap((d) => [
+  {player: d.player, phase: "Waiting for them", minutes: d.medianWait},
+  {player: d.player, phase: "Taking the turn", minutes: d.medianActing}
+]);
+return {turnStats,phaseRows};
+}});
+
+define({id: "0b2fe3cd", inputs: ["display","Plot","width","turnStats","dark","phaseRows","fmtMinutes"], body: (display,Plot,width,turnStats,dark,phaseRows,fmtMinutes) => {
+display(Plot.plot({
+  width,
+  height: 420,
+  marginLeft: 110,
+  x: {grid: true, label: "Median hours", transform: (m) => m / 60},
+  y: {axis: null, domain: ["Waiting for them", "Taking the turn"]},
+  fy: {label: null, domain: turnStats.map((d) => d.player)},
+  color: {
+    domain: ["Waiting for them", "Taking the turn"],
+    range: dark ? ["#3987e5", "#d95926"] : ["#2a78d6", "#eb6834"],
+    legend: true
+  },
+  marks: [
+    Plot.barX(phaseRows, {
+      fy: "player",
+      y: "phase",
+      x: "minutes",
+      fill: "phase",
+      insetTop: 1,
+      insetBottom: 1,
+      rx: 2,
+      channels: {median: {value: (d) => fmtMinutes(d.minutes), label: "Median"}},
+      tip: {format: {x: false, y: false, median: true}}
+    }),
+    Plot.ruleX([0])
+  ]
+}));
+}});
+
+define({id: "edab6ab6", inputs: ["display","Inputs","turnStats","fmtMinutes"], body: (display,Inputs,turnStats,fmtMinutes) => {
+display(Inputs.table(turnStats, {
+  columns: ["player", "turns", "medianTotal", "longest", "longestOn", "shortest", "shortestOn"],
+  header: {
+    player: "Player",
+    turns: "Turns",
+    medianTotal: "Median turn",
+    longest: "Longest",
+    longestOn: "Longest started",
+    shortest: "Shortest",
+    shortestOn: "Shortest started"
+  },
+  format: {medianTotal: fmtMinutes, longest: fmtMinutes, shortest: fmtMinutes},
+  select: false,
+  layout: "auto"
+}));
+}});
+
+define({id: "3c7463a8", inputs: ["Inputs","players","rounds","Generators"], outputs: ["whoInput","roundInput","whoFilter","roundFilter"], body: (Inputs,players,rounds,Generators) => {
+const whoInput = Inputs.checkbox(players, {label: "Player", value: players});
+const roundInput = Inputs.checkbox(rounds, {label: "Round", value: rounds, format: (r) => `R${r}`});
+const whoFilter = Generators.input(whoInput);
+const roundFilter = Generators.input(roundInput);
+return {whoInput,roundInput,whoFilter,roundFilter};
+}});
+
+define({id: "bcbcafaa", inputs: ["html","allNone","whoInput","players","roundInput","rounds","display"], body: async (html,allNone,whoInput,players,roundInput,rounds,display) => {
+display(await(
+html`<section class="filters">
+  <h2>Filters</h2>
+  <div class="grid grid-cols-2">
+    <div class="card">${allNone(whoInput, players)}${whoInput}</div>
+    <div class="card">${allNone(roundInput, rounds)}${roundInput}</div>
+  </div>
+</section>`
+))
+}});
+
+define({id: "bc19d1ca", inputs: ["turns","whoFilter","roundFilter","Inputs","fmtMinutes","wrapEvent","display"], outputs: ["shownTurns","turnTable"], body: (turns,whoFilter,roundFilter,Inputs,fmtMinutes,wrapEvent,display) => {
+const shownTurns = turns.filter((d) => whoFilter.includes(d.player) && roundFilter.includes(d.round));
+
+const turnTable = Inputs.table(shownTurns, {
+  columns: ["n", "round", "player", "start", "wait", "acting", "total", "firstEvent"],
+  header: {
+    n: "#",
+    round: "Rd",
+    player: "Player",
+    start: "Turn started",
+    wait: "Wait",
+    acting: "Acting",
+    total: "Total",
+    firstEvent: "First action"
+  },
+  width: {n: 55, round: 45, player: 110, start: 200, wait: 75, acting: 75, total: 75},
+  format: {wait: fmtMinutes, acting: fmtMinutes, total: fmtMinutes, firstEvent: wrapEvent},
+  rows: 12,
+  select: false,
+  layout: "fixed"
+});
+turnTable.classList.add("log-table");
+display(turnTable);
+return {shownTurns,turnTable};
+}});
+
+</script>
+</head>
+<body>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="./">TwilightWars Game Log</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link"><a href="./vp">Victory Points</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./whose-move">Whose Move?</a></li>
+  </ol>
+</nav>
+<script>{const e=document.querySelector("#observablehq-sidebar"),o=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?o.checked=r==="true":o.indeterminate=!0;for(const t of document.querySelectorAll("#observablehq-sidebar summary")){const s=t.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${t.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<div class="observablehq observablehq--block"><!--:75b7b46f:--></div>
+<div class="observablehq observablehq--block"><!--:e4b77d4a:--></div>
+<div class="observablehq observablehq--block"><!--:4d268d4d:--></div>
+<h1 id="whose-move" tabindex="-1"><a class="observablehq-header-anchor" href="#whose-move">Whose Move?</a></h1>
+<p>A turn starts when the previous player ends their turn or passes, or at the last strategy card pick for a round's first turn, so status, agenda and strategy phases never count against anyone. Passing isn't counted as a turn. Timestamps are wall clock, to the minute.</p>
+<hr>
+<h2 id="log-entries-by-day-and-hour" tabindex="-1"><a class="observablehq-header-anchor" href="#log-entries-by-day-and-hour">Log entries by day and hour</a></h2>
+<div class="observablehq observablehq--block"><!--:f5007334:--></div>
+<hr>
+<h2 id="waiting-for-them-vs-taking-the-turn" tabindex="-1"><a class="observablehq-header-anchor" href="#waiting-for-them-vs-taking-the-turn">Waiting for them vs taking the turn</a></h2>
+<div class="observablehq observablehq--block"><!--:7613c326:--></div>
+<div class="observablehq observablehq--block"><!--:0b2fe3cd:--></div>
+<p class="note">Each median is taken on its own, so waiting + taking the turn won't add up to the median turn below.</p>
+<hr>
+<h2 id="longest-and-shortest-turns" tabindex="-1"><a class="observablehq-header-anchor" href="#longest-and-shortest-turns">Longest and shortest turns</a></h2>
+<div class="observablehq observablehq--block"><!--:edab6ab6:--></div>
+<hr>
+<h2 id="turn-log" tabindex="-1"><a class="observablehq-header-anchor" href="#turn-log">Turn log</a></h2>
+<div class="observablehq observablehq--block"><!--:3c7463a8:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:bcbcafaa:--></div>
+<div class="observablehq observablehq--block"><!--:bc19d1ca:--></div>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="prev" href="./vp"><span>Victory Points</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-10-22T12:17:48">Oct 22, 2026</a>.</div>
+</footer>
+</div>
+</body>
+</html>
