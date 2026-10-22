@@ -1,5 +1,5 @@
-# Twilight Imperium 4 (Round 2.2)
-Analysis of game logs from our asynchronous game of Twilight Imperium 4th Edition. From Thursday, March 26, 2026 to Friday, October 16, 2026. Data analysis done with Observable Framework.
+# TwilightWars.com Game Log Analysis
+Analysis of game logs from an asynchronous game of Twilight Imperium 4th Edition played on TwilightWars.com. Data analysis using Observable Framework.
 
 ## Getting the data
 The game log isn't included in this repo. Export your own from [twilightwars.com](https://twilightwars.com) into `data-raw/`:

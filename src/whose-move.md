@@ -23,6 +23,8 @@ const wrapEvent = (e) => html`<span class="event-text">${e}</span>`;
 
 A turn starts when the previous player ends their turn or passes, or at the last strategy card pick for a round's first turn, so status, agenda and strategy phases never count against anyone. Passing isn't counted as a turn. Timestamps are wall clock, to the minute.
 
+---
+
 ## Log entries by day and hour
 
 ```js
@@ -49,6 +51,8 @@ display(Plot.plot({
   ]
 }));
 ```
+
+---
 
 ## Waiting for them vs taking the turn
 
@@ -110,6 +114,8 @@ display(Plot.plot({
 
 <p class="note">Each median is taken on its own, so waiting + taking the turn won't add up to the median turn below.</p>
 
+---
+
 ## Longest and shortest turns
 
 ```js
@@ -129,6 +135,8 @@ display(Inputs.table(turnStats, {
   layout: "auto"
 }));
 ```
+
+---
 
 ## Turn log
 
