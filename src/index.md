@@ -26,10 +26,10 @@ const summary = summarize(events);
 ```js
 html`<div class="hero">
   <h1>Twilight Imperium 4</h1>
-  <h2>Game Summary</h2>
   <h3>${summary.winner
     ? `Winner: ${summary.winner}`
     : `Game In Progress (Round ${summary.round})`}</h3>
+  <h2>Game Summary from TwilightWars.com Logs</h2>
   <p><i>From ${summary.start} to ${summary.end}.</i></p>
 </div>`
 ```
