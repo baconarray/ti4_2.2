@@ -3,15 +3,35 @@ title: Twilight Imperium 2026
 toc: false
 ---
 
-
-<div class="hero">
-  <h1>Twilight Imperium 4</h1>
-  <h2>Round 2.2</h2>
-  <p><i>From Thursday, March 26, 2026 to Friday, October 16, 2026.</i></p>
-</div>
-
 ```js
 const events = FileAttachment("./data/events.json").json();
+```
+
+```js
+function summarize(events) {
+  const gameOver = [...events].reverse().find((d) => /^Game over\./.test(d.event));
+  return {
+    start: events[0].time.split(" at ")[0],
+    end: events[events.length - 1].time.split(" at ")[0],
+    round: Math.max(...events.map((d) => d.round)),
+    winner: gameOver
+      ? gameOver.actor ?? /^Game over\. (.+?) wins/.exec(gameOver.event)?.[1] ?? "unknown"
+      : null
+  };
+}
+
+const summary = summarize(events);
+```
+
+```js
+html`<div class="hero">
+  <h1>Twilight Imperium 4</h1>
+  <h2>Game Summary</h2>
+  <h3>${summary.winner
+    ? `Winner: ${summary.winner}`
+    : `Game In Progress (Round ${summary.round})`}</h3>
+  <p><i>From ${summary.start} to ${summary.end}.</i></p>
+</div>`
 ```
 
 ```js
