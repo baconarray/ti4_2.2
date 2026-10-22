@@ -128,6 +128,8 @@ const events = raw.map((entry, i) => {
     round,
     actor,
     faction: factions[0] ?? null,
+    // The acting player's in-game color name (e.g. "red"), for matching the site's player colors.
+    color: playerTags.length ? attr(playerTags[0], "color") : null,
     players: involved,
     kind,
     // Victory points can come from any kind (e.g. Imperial is "strategy"), so flag them separately.
