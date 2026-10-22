@@ -110,6 +110,7 @@ const logTable = Inputs.table(results, {
 logTable.classList.add("log-table");
 display(logTable);
 ```
+---
 
 # Victory Points
 
