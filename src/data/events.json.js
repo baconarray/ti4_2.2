@@ -1,4 +1,4 @@
-import {readFileSync} from "node:fs";
+import {existsSync, readFileSync} from "node:fs";
 
 const RAW_JSON = "data-raw/log.json";
 const RAW_TEXT = "data-raw/log.txt";
@@ -36,6 +36,10 @@ function classify(text) {
   if (/faction ability|flagship ability|ability of their|played .*legendary|Sustain Damage/.test(text)) return "abilities";
   if (/ended their turn|passed\.$/.test(text)) return "turn";
   return "other";
+}
+
+for (const path of [RAW_JSON, RAW_TEXT]) {
+  if (!existsSync(path)) throw new Error(`${path} not found. See "Getting the data" in README.md.`);
 }
 
 const raw = JSON.parse(readFileSync(RAW_JSON, "utf-8"));
